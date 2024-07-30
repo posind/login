@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STP Authentication</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
+    <script type="module" src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>STP Authentication</h1>
+
+      <div id="response" class="response"></div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input
+          type="text"
+          inputmode="numeric"
+          id="phoneNumber"
+          placeholder="e.g., 6281234567890"
+        />
+      </div>
+      <div class="form-group">
+        <button id="sendButton">Send STP</button>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter received password"
+        />
+      </div>
+      <div class="form-group">
+        <button id="verifyButton">Verify STP</button>
+      </div>
+      <div class="form-group">
+          Did not receive the password?
+          <span class="resend-link" id="resendLink">Resend</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div
+          id="captcha"
+          class="cf-turnstile"
+          data-sitekey="0x4AAAAAAAfj2PR-4GafelYT"
+          data-theme="light"
+        ></div>
+      </div>
+    </div>
+  </body>
+</html>
