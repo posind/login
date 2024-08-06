@@ -1,69 +1,31 @@
-// import { sendSTP, verifySTP, resendSTP } from "./otp.js";
+document.addEventListener("DOMContentLoaded", () => {
+  const sendButton = document.getElementById("sendButton");
+  const verifyButton = document.getElementById("verifyButton");
+  const resendLink = document.getElementById("resendLink");
+  const responseDiv = document.getElementById("response");
 
-document.getElementById("sendButton").addEventListener("click", async () => {
-  const phoneNumber = document.getElementById("phoneNumber").value;
-  const captchaToken = document
-    .querySelector(".cf-turnstile")
-    .getAttribute("data-response");
+  sendButton.addEventListener("click", () => {
+    const phoneNumber = document.getElementById("phoneNumber").value;
+    if (phoneNumber) {
+      responseDiv.textContent = "Sending STP to " + phoneNumber;
+      // Implement your logic to send STP here
+    } else {
+      responseDiv.textContent = "Please enter a phone number.";
+    }
+  });
 
-  if (!phoneNumber || !captchaToken) {
-    showResponse("Phone number and captcha are required.");
-    return;
-  }
+  verifyButton.addEventListener("click", () => {
+    const password = document.getElementById("password").value;
+    if (password) {
+      responseDiv.textContent = "Verifying STP with password " + password;
+      // Implement your logic to verify STP here
+    } else {
+      responseDiv.textContent = "Please enter the password.";
+    }
+  });
 
-  if (!validatePhoneNumber(phoneNumber)) {
-    showResponse("Invalid phone number format.");
-    return;
-  }
-
-  try {
-    const response = await sendSTP(phoneNumber, captchaToken);
-    showResponse(`STP sent successfully: ${JSON.stringify(response)}`);
-  } catch (error) {
-    showResponse(`Error: ${error.message}`);
-  }
+  resendLink.addEventListener("click", () => {
+    responseDiv.textContent = "Resending STP...";
+    // Implement your logic to resend STP here
+  });
 });
-
-document.getElementById("verifyButton").addEventListener("click", async () => {
-  const phoneNumber = document.getElementById("phoneNumber").value;
-  const password = document.getElementById("password").value;
-
-  if (!phoneNumber || !password) {
-    showResponse("Phone number and password are required.");
-    return;
-  }
-
-  try {
-    const response = await verifySTP(phoneNumber, password);
-    showResponse(`STP verified successfully: ${JSON.stringify(response)}`);
-  } catch (error) {
-    showResponse(`Error: ${error.message}`);
-  }
-});
-
-document.getElementById("resendButton").addEventListener("click", async () => {
-  const phoneNumber = document.getElementById("phoneNumber").value;
-
-  if (!phoneNumber) {
-    showResponse("Phone number is required.");
-    return;
-  }
-
-  try {
-    const response = await resendSTP(phoneNumber);
-    showResponse(`STP resent successfully: ${JSON.stringify(response)}`);
-  } catch (error) {
-    showResponse(`Error: ${error.message}`);
-  }
-});
-
-function showResponse(message) {
-  const responseElement = document.getElementById("response");
-  responseElement.textContent = message;
-  responseElement.style.display = "block";
-}
-
-function validatePhoneNumber(number) {
-  const phoneRegex = /^62\d{9,15}$/;
-  return phoneRegex.test(number);
-}
