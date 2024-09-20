@@ -35,7 +35,7 @@ async function handleQRLogin(privateKey) {
             localStorage.setItem('authToken', data.Token);
 
             // Redirect or take further action upon successful login
-            window.location.href = "/dashboard"; // Redirect to a secure page after login
+            window.location.href = "https://pos.in.my.id/dashboard"; // Redirect to a secure page after login
         } else {
             console.error('Login failed:', data.Message);
         }
