@@ -6,7 +6,7 @@ wauthparam.keyword = "aHR0cHM6Ly93YS5tZS82Mjg5NTgwMDAwNjAwMD90ZXh0PXdoNHQ1YXV0aD
 wauthparam.tokencookiehourslifetime = 18;
 
 // Change the redirect path to /login
-wauthparam.redirect = "/login";
+wauthparam.redirect = "/auth";
 
 deleteCookie(wauthparam.tokencookiename);
 
