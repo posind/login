@@ -1,12 +1,12 @@
-import {qrController, deleteCookie} from "https://cdn.jsdelivr.net/gh/whatsauth/js@0.2.1/whatsauth.js";
-import {wauthparam} from "https://cdn.jsdelivr.net/gh/whatsauth/js@0.2.1/config.js";
+import { qrController, deleteCookie } from "https://cdn.jsdelivr.net/gh/whatsauth/js@0.2.1/whatsauth.js";
+import { wauthparam } from "https://cdn.jsdelivr.net/gh/whatsauth/js@0.2.1/config.js";
 
 wauthparam.auth_ws = "d3NzOi8vYXBpLndhLm15LmlkL3dzL3doYXRzYXV0aC9wdWJsaWM=";
 wauthparam.keyword = "aHR0cHM6Ly93YS5tZS82Mjg5NTgwMDAwNjAwMD90ZXh0PXdoNHQ1YXV0aDA=";
 wauthparam.tokencookiehourslifetime = 18;
 
-// Change the redirect path to /login
-wauthparam.redirect = "/auth";
+// Keep redirect to /login only if the user has not scanned the QR code
+wauthparam.redirect = "/login";
 
 deleteCookie(wauthparam.tokencookiename);
 
@@ -16,7 +16,7 @@ qrController(wauthparam);
 // Function to handle QR login after getting the QR code
 async function handleQRLogin(privateKey) {
     try {
-        const response = await fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/login', { // Your Go API endpoint
+        const response = await fetch('https://asia-southeast2-civil-epigram-429004-t8.cloudfunctions.net/webhook/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,8 +34,8 @@ async function handleQRLogin(privateKey) {
             // Store token in local storage or cookies for further use
             localStorage.setItem('authToken', data.Token);
 
-            // Redirect or take further action upon successful login
-            window.location.href = "https://pos.in.my.id/dashboard"; // Redirect to a secure page after login
+            // Redirect to the dashboard upon successful login
+            window.location.href = "https://pos.in.my.id/dashboard";
         } else {
             console.error('Login failed:', data.Message);
         }
@@ -48,6 +48,7 @@ async function handleQRLogin(privateKey) {
 // Example:
 let privateKeyFromQR = 'the-private-key-scanned-from-qr-code'; // Replace with the actual private key from QR code
 handleQRLogin(privateKeyFromQR);
+
 
 // punya pak rolly
 
